@@ -22,7 +22,7 @@ export const Signin = () => {
             const response = await fetch(`${api}/user/signin`, {
                 method: 'POST',
                 headers: {
-                'Content-Type': 'application/json',
+                  'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
             });
@@ -56,10 +56,10 @@ export const Signin = () => {
     
     return (
         <>
-            <div className="h-screen w-screen flex items-center justify-center p-5">
-                <div className="border border-gray-300 rounded rounded-xl p-9 w-1/2">
-                    <div className="text-4xl font-bold">Welcome</div>
-                    <div>Enter credentials to sign in</div>
+            <div className="h-screen w-screen flex items-center justify-center p-5 max-sm:w-screen ">
+                <div className="border border-gray-300 rounded rounded-xl p-9 w-1/2 max-sm:w-screen max-sm:p-2 max-sm:border-0">
+                    <div className="text-4xl font-bold max-sm:text-center">Welcome</div>
+                    <div className="max-sm:text-center">Enter credentials to sign in</div>
                     <form onSubmit={handleSubmit}>
                         <div className="py-3">
                             <div className="py-2" >Email</div>
