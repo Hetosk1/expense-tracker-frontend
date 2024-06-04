@@ -56,7 +56,6 @@ export const Dashboard = (): React.ReactNode => {
   }, [data]);
 
 
-
   const addExpense = async (event: React.FormEvent) => {
     event.preventDefault();
     try{
@@ -87,6 +86,18 @@ export const Dashboard = (): React.ReactNode => {
     }
   };
 
+  const deleteExpense = async (userId: string) => {
+    setLoading(true);
+    await fetch(`${api}/expense/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `bearer ${localStorage.getItem('token-expense-tracker')}`
+      }
+    });
+    data.pop()
+    setData(data.filter(element => element.id !== userId));
+    setLoading(false);
+  }
 
   return (
     <>{isVerified() 
@@ -244,6 +255,7 @@ export const Dashboard = (): React.ReactNode => {
                             <tr className="bg-gray-200">
                               <th className="py-2 px-4 text-left sm:py-3 sm:px-6 md:py-4 md:px-8">Name</th>
                               <th className="py-2 px-4 text-left sm:py-3 sm:px-6 md:py-4 md:px-8">Amount</th>
+                              <th className="py-2 px-1 text-left sm:py-3 sm:px-6 md:py-4 md:px-8">Delete</th>
                               {/* <th className="py-2 px-4 text-left sm:py-3 sm:px-6 md:py-4 md:px-8">Date</th> */}
                             </tr>
                           </thead>
@@ -252,6 +264,11 @@ export const Dashboard = (): React.ReactNode => {
                               <tr key={item.id}>
                                 <td className="py-2 px-4 sm:py-3 sm:px-6 md:py-4 md:px-8">{item.name}</td>
                                 <td className="py-2 px-4 sm:py-3 sm:px-6 md:py-4 md:px-8">&#8377;{item.amount}</td>
+                                <td className="py-2 px-4 sm:py-3 sm:px-6 md:py-4 md:px-8">
+                                  <button className="text-sm text-red-500 border-1 border-red-500 hover:text-white hover:bg-red-500 p-2 rounded rounded-lg" onClick={() => {
+                                    deleteExpense(item.id)
+                                  }}>Delete</button>
+                                </td>
                                 {/* <td className="py-2 px-4 sm:py-3 sm:px-6 md:py-4 md:px-8">2023-03-25</td> */}
                               </tr>
                             ))
